@@ -7,7 +7,7 @@
 - REST API с JWT-аутентификацией для доступа к конвертации валют и получения списка валют.
 - Модульные тесты для проверки функционала приложения.
 - Использование [внешнего API](https://www.cbr-xml-daily.ru/daily_json.js) для получения списка валют. Загрузка моделей (currency/models.py) при запуске
-- Использование конфигурации .env:
+- Использование конфигурации `.env` <br>
   Пример:
     ```env
     SECRET_KEY='django-insecure-_)_d&++qny!s$hd@q%#%ae)l=*4gjl+md6#kvob#y%isv5*rl6'
@@ -37,7 +37,6 @@
     EXTERNAL_API_METHOD=GET
     EXTERNAL_API_URL=https://www.cbr-xml-daily.ru/daily_json.js
     ```
-  
 ---
 
 ## Основные возможности
@@ -53,8 +52,8 @@
 
    - Размещена по адресу `/currency/exchange`.
    - Поля для заполнения:
-     - **from**: валюта, из которой будет осуществляться конвертация (CharCode).
-     - **to**: валюта, в которую будет осуществляться конвертация (CharCode).
+     - **from**: валюта, из которой будет осуществляться конвертация ([CharCode](https://www.iban.com/currency-codes)).
+     - **to**: валюта, в которую будет осуществляться конвертация ([CharCode](https://www.iban.com/currency-codes)).
      - **amount**: количество конвертируемой валюты.
    - Результат конвертации отображается после заполнения формы.
 
@@ -67,7 +66,7 @@
 ---
 
 ### API
-1. **Аутентификация через JWT**:
+1. **Аутентификация через [JWT](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/)**:
    - Используется библиотека `rest_framework_simple_jwt`.
    - Эндпоинты для работы с токенами:
      - `/api/token/` — получение пары `access` и `refresh` токенов.
@@ -97,8 +96,8 @@
        
    - Метод `POST`: выполняет конвертацию валют.
      - Требуемые поля в запросе:
-       - `currencyFrom` (строка) — валюта-источник.
-       - `currencyTo` (строка) — валюта-получатель.
+       - `currencyFrom` (строка) — валюта-источник ([CharCode](https://www.iban.com/currency-codes)).
+       - `currencyTo` (строка) — валюта-получатель ([CharCode](https://www.iban.com/currency-codes)).
        - `amount` (число) — сумма для конвертации.
      - Пример запроса:
        
@@ -115,6 +114,24 @@
 ```bash
 pip install -r requirements.txt
 ```
+  - Использованные библиотеки:
+
+    ```bash
+    pip install asgiref==3.8.1
+    certifi==2024.8.30
+    charset-normalizer==3.4.0
+    Django==5.1.3
+    django-cors-headers==4.6.0
+    djangorestframework==3.15.2
+    djangorestframework-simplejwt==5.3.1
+    idna==3.10
+    PyJWT==2.10.0
+    python-dotenv==1.0.1
+    requests==2.32.3
+    sqlparse==0.5.2
+    tzdata==2024.2
+    urllib3==2.2.3
+    ```
 
 2. Применение миграций:
 
