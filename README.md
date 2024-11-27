@@ -117,7 +117,7 @@ pip install -r requirements.txt
   - Использованные библиотеки:
 
     ```bash
-    pip install asgiref==3.8.1
+    asgiref==3.8.1
     certifi==2024.8.30
     charset-normalizer==3.4.0
     Django==5.1.3
