@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.conf import settings
 from .models import Currency
-
+from .forms import CurrencyForm
 
 def upd_cur():
     try:
@@ -61,11 +61,15 @@ def UserRegister(request):
     else:
         return render(request, 'logauth/login.html', context)
         
-@login_required
+
 def index(request):
+    if not(request.user.is_authenticated):
+        return redirect('currency:login')
+        
     context = {
         'pageTitle': 'Currency Exchange',
-        'currencies': Currency.objects.all()
+        'currencies': Currency.objects.all(),
+        'Val' : {i.CharCode : {"Value" : i.Value, "Nominal": i.Nominal} for i in Currency.objects.all()}
     }
     return render(request, 'currency/index.html', context)
 

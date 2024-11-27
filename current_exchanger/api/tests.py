@@ -94,7 +94,6 @@ class CurrencyExchangeTests(APITestCase):
         }
         
         response = self.client.post(url, data, HTTP_AUTHORIZATION=f'Bearer {access_token}')
-        
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn(str(self.test1.exchange_to(data['ammount'], self.test2)), response.data)  # Убедитесь, что ответ содержит информацию о валюте
 

@@ -22,11 +22,14 @@ class CurrencyExchange(APIView):
         currencyFrom = request.data['currencyFrom']
         currencyTo = request.data['currencyTo']
         ammount = request.data['ammount']
-        if not(ammount.isnumeric()):
+        try:
+            ammount = float(ammount)
+        except:
             return Response("Invalid data", status=status.HTTP_400_BAD_REQUEST)
-        ammount = float(ammount)
+        if ammount <= 0:
+            return Response("Invalid data2", status=status.HTTP_400_BAD_REQUEST)
         if not(Currency.objects.filter(CharCode=currencyFrom).exists() and Currency.objects.filter(CharCode=currencyTo).exists() and (type(ammount) in [int, float])):
-            return Response("Invalid data", status=status.HTTP_400_BAD_REQUEST)
+            return Response("Invalid data3", status=status.HTTP_400_BAD_REQUEST)
         currencyFrom = Currency.objects.filter(CharCode=currencyFrom).first()
         currencyTo = Currency.objects.filter(CharCode=currencyTo).first()
         result = currencyFrom.exchange_to(ammount, currencyTo)

@@ -173,13 +173,14 @@ SIMPLE_JWT = {
 }
 
 
+try:
+    AVAILABLE_CURRENCIES = list(requests.request(ENV['EXTERNAL_API_METHOD'], ENV['EXTERNAL_API_URL']).json()['Valute'].values())[0:]
 
-AVAILABLE_CURRENCIES = list(requests.request(ENV['EXTERNAL_API_METHOD'], ENV['EXTERNAL_API_URL']).json()['Valute'].values())[0:]
-
-for i in AVAILABLE_CURRENCIES:
-    i['UID'] = i['ID']
-    del i['ID']
-
+    for i in AVAILABLE_CURRENCIES:
+        i['UID'] = i['ID']
+        del i['ID']
+except:
+    print("WARNING! CAN'T ACCESS DATA FROM EXTERNAL API")
 
 
 

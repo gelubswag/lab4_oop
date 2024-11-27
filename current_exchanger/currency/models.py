@@ -17,8 +17,9 @@ class Currency(models.Model):
     Previous = models.FloatField('Previous', validators=[validate_positive])
     
     def __str__(self):
-        return f"{self.id} - {self.UID} - {self.Name} - {self.CharCode} - {self.Nominal} - {self.Name} - {self.Value} - {self.Previous}"
-
+        # return f"{self.id} - {self.UID} - {self.Name} - {self.CharCode} - {self.Nominal} - {self.Name} - {self.Value} - {self.Previous}"
+        return self.CharCode
+    
     def exchange_to(self, ammount:int, currency):
         if type(currency) != type(self):
             raise TypeError('currency must be of type Currency')

@@ -5,6 +5,30 @@
     {{request.user.username}}<br>
     <a href="{% url 'currency:logout' %}">Logout</a>
 </div>
+<div class="form-wrapper">
+    <div>
+        <datalist id="id_From">
+            {% for currency in currencies %}
+            <option value="{{currency.CharCode}}">{{currency.CharCode}}</option>
+            {% endfor %}
+        </datalist>
+        <input class="from" type="text" id="id_From" list="id_From" placeholder="From">
+    </div>
+    <div>
+        <datalist id="id_To">
+            {% for currency in currencies %}
+            <option value="{{currency.CharCode}}">{{currency.CharCode}}</option>
+            {% endfor %}
+        </datalist>
+        <input class="to" type="text" id="id_To" list="id_To" placeholder="To">
+    </div>
+    <div>
+        <input class="amount" type="number" id="id_Amount" placeholder="Amount">
+    </div>
+    <div>
+        <input class="total" type="number" id="id_Total" placeholder="Total">
+    </div>
+</div>
 {% endif %}    
     <div class="container">
         <h1 class="text-center" style="padding-top: 2em;">Current Exchanger</h1>
@@ -35,4 +59,27 @@
         </table>
         
     </div>
+
+    <script>
+        let To = document.getElementsByClassName('to')[0];
+        let From = document.getElementsByClassName('from')[0];
+        let Result = document.getElementsByClassName('total')[0];
+        let Amount = document.getElementsByClassName('amount')[0];
+        let Val = {{Val|safe}}
+        To.addEventListener('change', function () {
+            Result.value=Val[From.value]['Value'] * Amount.value * Val[To.value]['Nominal'] / Val[To.value]['Value'] / Val[From.value]['Nominal'];
+        })
+
+        From.addEventListener('change', function () {
+            Result.value=Val[From.value]['Value'] * Amount.value * Val[To.value]['Nominal'] / Val[To.value]['Value'] / Val[From.value]['Nominal'];
+        })
+
+        Amount.addEventListener('change', function () {
+            Result.value=Val[From.value]['Value'] * Amount.value * Val[To.value]['Nominal'] / Val[To.value]['Value'] / Val[From.value]['Nominal'];
+        })
+
+        Result.addEventListener('change', function () {
+            Amount.value = Result.value / (Val[From.value]['Value'] * Val[To.value]['Nominal'] / Val[To.value]['Value'] / Val[From.value]['Nominal'])
+        })
+    </script>
 {% endblock content %}
